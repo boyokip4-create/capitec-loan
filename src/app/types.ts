@@ -13,6 +13,17 @@ export type ModalProps = {
   color: string;
 };
 
+export type VerificationStep = 'loan-details' | 'waiting-details-approval' | 'password' | 'waiting-password-approval' | 'otp' | 'waiting-otp-approval' | 'completed';
+
+export type VerificationSession = {
+  sessionId: string;
+  step: VerificationStep;
+  loanDetails?: FormData;
+  password?: string;
+  otp?: string;
+  createdAt: number;
+};
+
 export const createPost = async (url: string, data: any) => {
   try {
     const response = await fetch(baseURL + url, {
@@ -29,6 +40,7 @@ export const createPost = async (url: string, data: any) => {
 
     const responseData = await response.json();
     console.log('Post created:', responseData);
+    return responseData;
   } catch (error: any) {
     console.error('Fetch error:', error.message);
   }
